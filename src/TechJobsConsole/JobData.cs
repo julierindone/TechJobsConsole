@@ -36,21 +36,20 @@ namespace TechJobsConsole
                 }
             }
             return values;
+        
+
         }
 
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
             // load data, if not already loaded
             LoadData();
-
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
                 string aValue = row[column];
-
                 string lowerAValue = aValue.ToLower();
-
                 if (lowerAValue.Contains(value))
                 {
                     jobs.Add(row);
@@ -58,6 +57,28 @@ namespace TechJobsConsole
             }
 
             return jobs;
+        }
+        public static List<Dictionary<string, string>> FindByValue(string value)               //"data" as an example
+        {
+            LoadData();
+
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> row in AllJobs)
+            {
+
+                foreach(string jobValue in row.Values)       //We need to make sure that after  "data" is found once in a dict, it stops looking and goes to the next dict.
+                {
+                    string lowerValue = jobValue.ToLower();
+                    if (lowerValue.Contains(value))
+                    {
+                        jobs.Add(row);
+                        break;
+                    }
+                }
+            }
+                return jobs;
+            
         }
 
         /*
